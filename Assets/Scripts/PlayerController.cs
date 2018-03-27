@@ -5,14 +5,32 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float speed;
+    public float ballSpeed;
     public float angle;
+    public GameObject ball;
+    public Transform ballSpawn;
+
+    public static PlayerController pc;
 
     private Rigidbody2D rBody;
     private Vector2 movement;
+    private bool ballReady;
 
     private void Start()
     {
+        pc = this;
         rBody = this.gameObject.GetComponent<Rigidbody2D>();
+
+        ballReady = true;
+    }
+
+    private void Update()
+    {
+        if (Input.GetButton("Fire1") && ballReady)
+        {
+            Instantiate(ball, ballSpawn.position, ballSpawn.rotation);
+            ballReady = false;
+        }
     }
 
     private void FixedUpdate()
@@ -23,5 +41,22 @@ public class PlayerController : MonoBehaviour {
 
         rBody = this.gameObject.GetComponent<Rigidbody2D>();
         rBody.velocity = movement * speed;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Ball")
+        {
+            //other.GetComponent<Rigidbody2D>().velocity = other.GetComponent<Rigidbody2D>().velocity / ballSpeed;
+
+            float x = (other.transform.position.x - transform.position.x) * angle;
+            movement = new Vector2(x, other.GetComponent<Rigidbody2D>().velocity.y / ballSpeed);
+            other.GetComponent<Rigidbody2D>().velocity = movement * ballSpeed;
+        }
+    }
+
+    public void ReadyBall()
+    {
+        ballReady = true;
     }
 }
