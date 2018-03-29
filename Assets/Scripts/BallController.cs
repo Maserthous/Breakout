@@ -7,8 +7,8 @@ public class BallController : MonoBehaviour {
     public float speed;
     public float launchX;
     public float launchY;
-    public float minVelY;
     public float maxVelX;
+    public float minVelY;
     public float maxVelY;
 
     private Rigidbody2D rBody;
@@ -23,10 +23,10 @@ public class BallController : MonoBehaviour {
         rBody.velocity = movement * speed;
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void FixedUpdate()
     {
         //Prevents the ball from going too slowly vertically
-        if (rBody.velocity.y < minVelY && rBody.velocity.y > -minVelY)
+        /*if (rBody.velocity.y < minVelY && rBody.velocity.y > -minVelY)
         {
             if (rBody.velocity.y > 0)
                 y = minVelY;
@@ -34,24 +34,22 @@ public class BallController : MonoBehaviour {
                 y = -minVelY;
         }
         else
-            y = rBody.velocity.y;
+            y = rBody.velocity.y;*/
+        if (rBody.velocity.y > 0)
+        {
+            y = Mathf.Clamp(rBody.velocity.y, minVelY, maxVelY);
+        }
+        else
+        {
+            y = Mathf.Clamp(rBody.velocity.y, -minVelY, -maxVelY);
+        }
 
         //Prevent the ball from going too fast
-        if (rBody.velocity.y > maxVelY)
-            y = maxVelY;
-        else if (rBody.velocity.y < -maxVelY)
-            y = -maxVelY;
-        else
-            y = rBody.velocity.y;
-
-        if (rBody.velocity.x > maxVelX)
-            x = maxVelX;
-        else if (rBody.velocity.x < -maxVelX)
-            x = -maxVelX;
-        else 
-            x = rBody.velocity.x;
+        //y = Mathf.Clamp(y, -maxVelY, maxVelY);
+        x = Mathf.Clamp(rBody.velocity.x, -maxVelX, maxVelX);
 
         rBody.velocity = new Vector2(x, y);
+        //Debug.Log("Ball yVel: " + rBody.velocity.y);
     }
 
 

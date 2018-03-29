@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     public float speed;
+    public float xMin;
+    public float xMax;
     public float ballSpeed;
     public float angle;
     public GameObject ball;
@@ -35,12 +37,13 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveHorizontal = Input.GetAxis("Mouse X");
 
         Vector2 movement = new Vector2(moveHorizontal, 0);
 
         rBody = this.gameObject.GetComponent<Rigidbody2D>();
         rBody.velocity = movement * speed;
+        rBody.position = new Vector2(Mathf.Clamp(rBody.position.x, xMin, xMax), rBody.position.y);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

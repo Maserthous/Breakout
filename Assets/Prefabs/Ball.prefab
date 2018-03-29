@@ -92,7 +92,7 @@ MonoBehaviour:
   speed: 5
   launchX: 0.5
   launchY: 1
-  minVelY: 1
+  minVelY: 2
   maxVelX: 5
   maxVelY: 5
 --- !u!212 &212923809087121388
