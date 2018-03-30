@@ -18,7 +18,7 @@ public class KaizoBrick : MonoBehaviour {
 
     private void Update()
     {
-        if (GCScript.game.GetWeaken())
+        if (GCScript.game.GetWeak())
         {
             this.gameObject.GetComponent<SpriteRenderer>().color = reveal;
             hit = true;
@@ -33,8 +33,9 @@ public class KaizoBrick : MonoBehaviour {
 
             if (hit)
             {
+                GCScript.game.AddScore(score);
                 GCScript.game.BrickBroken();
-                GCScript.game.SpawnUpgrade(upgradeID, this.transform);
+                GCScript.game.SpawnUpgrade(upgradeID, this.transform.position);
                 Destroy(this.gameObject);
             }
 

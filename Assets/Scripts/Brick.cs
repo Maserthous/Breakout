@@ -13,7 +13,7 @@ public class Brick : MonoBehaviour
         {
             GCScript.game.AddScore(score);
             GCScript.game.BrickBroken();
-            GCScript.game.SpawnUpgrade(upgradeID, this.transform);
+            GCScript.game.SpawnUpgrade(upgradeID, this.transform.position);
             Destroy(this.gameObject);
         }
     }

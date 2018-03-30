@@ -62,4 +62,11 @@ public class PlayerController : MonoBehaviour {
     {
         ballReady = true;
     }
+
+    public IEnumerator Extended(int duration, float scale)
+    {
+        this.transform.localScale = new Vector3(scale, 1, 1);
+        yield return new WaitForSeconds(duration);
+        this.transform.localScale = new Vector3(1.5f, 1, 1);
+    }
 }

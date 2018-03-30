@@ -15,6 +15,15 @@ public class HardBrick : MonoBehaviour {
         
     }
 
+    private void Update()
+    {
+        if (GCScript.game.GetWeak())
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().color = damaged;
+            health = 1;
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Ball")
@@ -36,7 +45,7 @@ public class HardBrick : MonoBehaviour {
             if (health <= 0)
             {
                 GCScript.game.BrickBroken();
-                GCScript.game.SpawnUpgrade(upgradeID, this.transform);
+                GCScript.game.SpawnUpgrade(upgradeID, this.transform.position);
                 Destroy(this.gameObject);
             }
         }
